@@ -34,6 +34,9 @@ class MainViewModel:ViewModel(){
 
 
     fun startTimer(){
+        if(isTimerRunning.value){
+            resetTimer()
+        }
         timer.start()
         _isTimerRunning.value = true
 
