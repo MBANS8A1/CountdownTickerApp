@@ -30,6 +30,6 @@ fun Timer(currentTime: Long,
                 Text(text = "Restart")
             }
         }
-        Text(text=currentTime.toString())
+        Text(text= getFormattedTime(currentTime))
     }
 }
