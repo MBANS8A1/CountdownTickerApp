@@ -24,7 +24,7 @@ fun Timer(currentTime: Long, isRunning:Boolean) {
             }
             Spacer(modifier = Modifier.size(8.dp))
             Button(onClick = {}) {
-                Text(text = "Start")
+                Text(text = "Restart")
             }
         }
     }
