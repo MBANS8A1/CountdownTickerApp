@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting(name = "Android")
+                    CountDownTickerApp()
                 }
             }
         }
@@ -49,17 +49,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(
-        text = "Hello $name!",
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CountdownTickerAppTheme {
-        Greeting("Android")
-    }
-}
