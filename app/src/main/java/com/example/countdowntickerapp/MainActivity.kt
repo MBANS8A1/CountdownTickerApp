@@ -37,6 +37,15 @@ class MainActivity : ComponentActivity() {
     fun CountDownTickerApp(){
         val currentTime by viewModel.currentTime.collectAsState()
         val isRunning by viewModel.isTimerRunning.collectAsState()
+        Timer(currentTime=currentTime,
+            isRunning=isRunning,
+            onStart = {
+                viewModel.startTimer()
+            },
+            onRestart = {
+                viewModel.restartTimer()
+            }
+        )
     }
 }
 
