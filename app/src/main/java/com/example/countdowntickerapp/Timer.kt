@@ -13,17 +13,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Timer(currentTime: Long, isRunning:Boolean) {
+fun Timer(currentTime: Long,
+          isRunning:Boolean,
+          onStart: () -> Unit,
+          onRestart: () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        Row {
-            Button(onClick = {}) {
+        Row(modifier = Modifier.align(Alignment.BottomCenter)) {
+            Button(onClick = onStart) {
                 Text(text = "Start")
             }
             Spacer(modifier = Modifier.size(8.dp))
-            Button(onClick = {}) {
+            Button(onClick = onRestart) {
                 Text(text = "Restart")
             }
         }
