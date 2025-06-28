@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -84,11 +85,16 @@ fun CircularIndicator(progress: Float) {
                 horizontal = size.width/2 - TIMER_RADIUS,
                 vertical = size.height/2 - TIMER_RADIUS
             ){
-                //use Bursh for the gradient
+                //use Brush for the gradient
                 val gradient = Brush.linearGradient(
                     listOf(blue500, blue200, blue400)
                 )
                 drawBackGround(card)
+                drawProgressIndicator(
+                    brush = gradient,
+                    progress,
+                    stroke
+                )
             }
         }
     }
@@ -120,11 +126,23 @@ fun DrawScope.drawProgressIndicator(
     )
     //size of arc's bounding box uses innerRadius as we rake into account stroke width
     val size = Size(innerRadius*2,innerRadius*2)
+    drawArc(
+        brush = brush,
+        startAngle =270f,
+        sweepAngle = progress,
+        useCenter = false,
+        topLeft = topLeft,
+        size = size,
+        style = stroke,
+        blendMode = BlendMode.Src
+
+    )
 
 }
 
 @Composable
 fun CountDownTickerProgressIndicator(progress:Float,currentTime: Long) {
+
     Box(
         contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()
     ){
