@@ -142,6 +142,7 @@ fun DrawScope.drawProgressIndicator(
 
 @Composable
 fun CountDownTickerProgressIndicator(progress:Float,currentTime: Long) {
+    CircularIndicator(progress = progress)
 
     Box(
         contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()
