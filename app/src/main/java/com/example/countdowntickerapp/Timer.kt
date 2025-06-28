@@ -26,12 +26,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.countdowntickerapp.ui.theme.blue200
+import com.example.countdowntickerapp.ui.theme.blue400
+import com.example.countdowntickerapp.ui.theme.blue500
+import com.example.countdowntickerapp.ui.theme.card
 
 const val TIMER_RADIUS = 300f
 
@@ -53,16 +60,13 @@ fun Timer(currentTime: Long,
                 Text(text = "Restart")
             }
         }
-
     }
 }
 
 @Composable
 fun CircularIndicator(progress: Float) {
-
     Surface(
         color = MaterialTheme.colorScheme.background
-
     ) {
         val stroke = with(LocalDensity.current){
             Stroke(
@@ -70,18 +74,34 @@ fun CircularIndicator(progress: Float) {
                 cap = StrokeCap.Round
             )
         }
-        Canvas(modifier = Modifier.fillMaxSize()
+        Canvas(modifier = Modifier
+            .fillMaxSize()
             .height(300.dp)
         ) {
             inset(
                 horizontal = size.width/2 - TIMER_RADIUS,
                 vertical = size.height/2 - TIMER_RADIUS
             ){
-
+                val gradient = Brush.linearGradient(
+                    listOf(blue500, blue200, blue400)
+                )
+                drawBackGround(card)
             }
         }
     }
-    
+}
+
+fun DrawScope.drawBackGround(
+    color:Color,
+
+) {
+
+    drawCircle(
+        color = color,
+        radius = TIMER_RADIUS,
+        center = center
+    )
+
 }
 
 @Composable
@@ -111,8 +131,6 @@ fun CountDownTickerProgressIndicator(progress:Float,currentTime: Long) {
                 style =  MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold
             )
-
         }
-
     }
 }
