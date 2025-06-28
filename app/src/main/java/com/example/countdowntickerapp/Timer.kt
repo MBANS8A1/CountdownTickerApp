@@ -26,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -82,6 +84,7 @@ fun CircularIndicator(progress: Float) {
                 horizontal = size.width/2 - TIMER_RADIUS,
                 vertical = size.height/2 - TIMER_RADIUS
             ){
+                //use Bursh for the gradient
                 val gradient = Brush.linearGradient(
                     listOf(blue500, blue200, blue400)
                 )
@@ -92,15 +95,31 @@ fun CircularIndicator(progress: Float) {
 }
 
 fun DrawScope.drawBackGround(
-    color:Color,
-
+    color:Color
 ) {
-
     drawCircle(
         color = color,
         radius = TIMER_RADIUS,
         center = center
     )
+}
+
+fun DrawScope.drawProgressIndicator(
+    brush:Brush,
+    progress:Float,
+    stroke:Stroke
+){
+    //using the size property of the Canvas
+    val innerRadius = (size.minDimension -stroke.width)/2
+    //get the half size of the drawing area
+    val halfSize = size /2.0f
+    val topLeft = Offset(
+        x = halfSize.width - innerRadius,
+        y= halfSize.height - innerRadius
+
+    )
+    //size of arc's bounding box uses innerRadius as we rake into account stroke width
+    val size = Size(innerRadius*2,innerRadius*2)
 
 }
 
