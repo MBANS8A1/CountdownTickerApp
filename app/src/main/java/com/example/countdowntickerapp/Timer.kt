@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -42,29 +43,39 @@ fun Timer(currentTime: Long,
                 Text(text = "Restart")
             }
         }
+
+    }
+}
+
+@Composable
+fun CountDownTickerProgressIndicator(progress:Float,currentTime: Long) {
+    Box(
+        contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()
+    ){
         AnimatedContent(targetState = currentTime,
             transitionSpec = {
                 if(targetState > initialState){
-                   fadeIn() + slideInVertically(
-                       animationSpec = spring(),
-                       initialOffsetY = {fullHeight -> fullHeight }) togetherWith(
-                           fadeOut(animationSpec = spring())
-                       )
+                    fadeIn() + slideInVertically(
+                        animationSpec = spring(),
+                        initialOffsetY = {fullHeight -> fullHeight }) togetherWith(
+                            fadeOut(animationSpec = spring())
+                            )
 
                 }else{
                     fadeIn() + slideInVertically(
                         animationSpec = spring(),
                         initialOffsetY = {fullHeight -> fullHeight }) togetherWith(
                             fadeOut(animationSpec = spring())
-                        )
+                            )
                 }.using(SizeTransform(clip = false))
             },
-            ) {time ->
+        ) {time ->
             Text(text= getFormattedTime(time),
-                 style =  MaterialTheme.typography.bodyLarge,
-                 fontWeight = FontWeight.Bold
-                )
+                style =  MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold
+            )
 
         }
+
     }
 }
