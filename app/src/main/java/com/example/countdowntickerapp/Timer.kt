@@ -10,11 +10,13 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.animation.with
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.LocalContentColor
@@ -26,9 +28,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+
+const val TIMER_RADIUS = 300f
 
 @Composable
 fun Timer(currentTime: Long,
@@ -64,6 +69,16 @@ fun CircularIndicator(progress: Float) {
                 width = 30.dp.toPx(),
                 cap = StrokeCap.Round
             )
+        }
+        Canvas(modifier = Modifier.fillMaxSize()
+            .height(300.dp)
+        ) {
+            inset(
+                horizontal = size.width/2 - TIMER_RADIUS,
+                vertical = size.height/2 - TIMER_RADIUS
+            ){
+
+            }
         }
     }
     
