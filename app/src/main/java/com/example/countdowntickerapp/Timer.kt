@@ -3,8 +3,13 @@ package com.example.countdowntickerapp
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -24,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -38,6 +44,7 @@ import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.countdowntickerapp.MainViewModel.Companion.totalTime
 import com.example.countdowntickerapp.ui.theme.blue200
 import com.example.countdowntickerapp.ui.theme.blue400
 import com.example.countdowntickerapp.ui.theme.blue500
@@ -50,6 +57,26 @@ fun Timer(currentTime: Long,
           isRunning:Boolean,
           onStart: () -> Unit,
           onRestart: () -> Unit) {
+
+    val transition = updateTransition(targetState = currentTime, label = null)
+
+    val tran by transition.animateFloat(
+        transitionSpec = { tween(durationMillis = 1000,easing= FastOutLinearInEasing)},
+            label = ""
+    ){ timeLeft ->
+        if(timeLeft < 0 ){
+            360f
+        }
+        else{
+            360f - ((360f /totalTime) * (totalTime-timeLeft))
+        }
+    }
+
+    val progress by animateFloatAsState(
+        targetValue = if(isRunning) tran else 0f
+
+    )
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -64,6 +91,8 @@ fun Timer(currentTime: Long,
             }
         }
     }
+    CountDownTickerProgressIndicator(progress,currentTime)
+
 }
 
 @Composable
