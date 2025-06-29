@@ -107,7 +107,7 @@ fun CircularIndicator(progress: Float) {
             )
         }
         Canvas(modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .height(300.dp)
         ) {
             inset(
