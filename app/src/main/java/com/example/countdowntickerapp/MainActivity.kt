@@ -14,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.countdowntickerapp.ui.theme.CountdownTickerAppTheme
@@ -24,6 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
             CountdownTickerAppTheme {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -35,8 +38,10 @@ class MainActivity : ComponentActivity() {
     }
     @Composable
     fun CountDownTickerApp(){
+        val showDialogStatus by remember{ mutableStateOf(false) }
         val currentTime by viewModel.currentTime.collectAsState()
         val isRunning by viewModel.isTimerRunning.collectAsState()
+
         Timer(currentTime=currentTime,
             isRunning=isRunning,
             onStart = {
@@ -44,6 +49,14 @@ class MainActivity : ComponentActivity() {
             },
             onRestart = {
                 viewModel.restartTimer()
+            },
+            showDialogValue = showDialogStatus,
+            timerState = viewModel.timerState,
+            dialogText = "Enter start time in seconds:",
+            onDismissRequest = {!showDialogStatus},
+            onUpdateTimerState ={
+                !showDialogStatus
+
             }
         )
     }
