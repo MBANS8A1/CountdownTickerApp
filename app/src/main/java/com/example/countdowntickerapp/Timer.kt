@@ -22,7 +22,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -56,7 +59,8 @@ const val TIMER_RADIUS = 300f
 fun Timer(currentTime: Long,
           isRunning:Boolean,
           onStart: () -> Unit,
-          onRestart: () -> Unit) {
+          onRestart: () -> Unit
+) {
 
     val transition = updateTransition(targetState = currentTime, label = null)
 
@@ -81,7 +85,7 @@ fun Timer(currentTime: Long,
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        Row(modifier = Modifier.align(Alignment.BottomCenter)) {
+        Row(modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 30.dp)) {
             Button(onClick = onStart) {
                 Text(text = "Start")
             }
@@ -90,8 +94,8 @@ fun Timer(currentTime: Long,
                 Text(text = "Restart")
             }
         }
+        CountDownTickerProgressIndicator(progress,currentTime) //moved within the bounding Box
     }
-    CountDownTickerProgressIndicator(progress,currentTime)
 
 }
 
@@ -153,7 +157,7 @@ fun DrawScope.drawProgressIndicator(
         y= halfSize.height - innerRadius
 
     )
-    //size of arc's bounding box uses innerRadius as we rake into account stroke width
+    //size of arc's bounding box uses innerRadius as we take into account for stroke width
     val size = Size(innerRadius*2,innerRadius*2)
     drawArc(
         brush = brush,
@@ -164,18 +168,16 @@ fun DrawScope.drawProgressIndicator(
         size = size,
         style = stroke,
         blendMode = BlendMode.Src
-
     )
 
 }
 
 @Composable
 fun CountDownTickerProgressIndicator(progress:Float,currentTime: Long) {
-    CircularIndicator(progress = progress)
-
     Box(
-        contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()
+        contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth().navigationBarsPadding()
     ){
+        CircularIndicator(progress = progress)
         AnimatedContent(targetState = currentTime,
             transitionSpec = {
                 if(targetState > initialState){
