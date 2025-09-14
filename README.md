@@ -15,4 +15,8 @@ complete certain challenges; for example:
 
 The application makes use of techniques in Jetpack Compose to create animations, transitions and with the help of the Canvas API to draw an animated arc to simulate counting down in a smooth way. Furthermore, the control of time uses state control techniques like MutableStateFlow, StateFlow (for emitting the values from the ViewModel to be used as states in the Timer composable function) and the CountDownTimer API, which has had its methods overriden. The events are passed from the composable caller (Timer composable in the MainActivity), which is then fed to the ViewModel, so it can then update the state as needed.
 
-//Image of the timer application in action
+ <img src="https://github.com/MBANS8A1/CountdownTickerApp/blob/48b99851c39f73a9674d12f2f1aeabc72746d33c/app/src/main/res/drawable/timer_image1.png" alt="Start time" width="250" height="490">
+
+ <img src="https://github.com/MBANS8A1/CountdownTickerApp/blob/48b99851c39f73a9674d12f2f1aeabc72746d33c/app/src/main/res/drawable/timer_image2.png" alt="Countdown" width="250" height="490">
+
+
